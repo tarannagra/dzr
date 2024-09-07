@@ -1,0 +1,5 @@
+requests
+rich
+deemix
+tinytag
+deezer-py
