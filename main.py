@@ -106,12 +106,9 @@ class Main:
                     return
                 link, title = result
                 status.update(f"Found a match for {link}!")
-        if "album" in link:
-            prompt += " album"
-        elif title:
-            prompt += f" {title}"
-        else:
-            prompt += " the song"
+    
+        # INFO: needs to be re-worked. shows the title, but SHOULD say something else if downloading an album
+        prompt = f" {title}"
         with self.console.status(initial_prompt + prompt, spinner="dots") as status:
             self.dzr.download(song_link=link)
             status.update("Downloaded!")
@@ -123,24 +120,35 @@ class Main:
         if len(results) == 0:
             self.console.print(f"Nothing found for [bold red]{query}[reset]")
             return
+        
+        # INFO: rework so that it is a dict not a list with:
+        # title->link
+        
+        # could be the SAME song name (some are identicial), but different link, so key => link and value => title
+        info = {}
+
+
         links = []
+
         table = Table(title="Choose your option:")
         table.add_column("[u]Available Tracks[/u]", justify="left")
 
         for index, result in enumerate(results, start=1):
             track_name = f"{result["artist"]["name"]} - {result["title"]}"
             links.append(result["link"])
+            info.update({result["link"]: track_name})
             table.add_row(f"{index}. {track_name}")
         table.add_section()
         table.add_row("[b red]99. Quit.[reset]")
         self.console.print(table)
-        
+
         while True:
             try:
                 choice = int(self.console.input("[b u green]choice::ss::[/b u green] "))
                 if 1 <= choice <= len(links):
-                    # chosen choice. 
+                    # chosen choice.
                     decided = links[choice - 1]
+                    title = info[decided]
                     break
                 elif choice == 99:
                     self.console.print("[b red]Aborted![reset]")
@@ -151,11 +159,10 @@ class Main:
             except ValueError:
                 self.console.print("[b red]You need to enter a valid number.[reset]")
         
-        with self.console.status("Downloading", spinner="dots") as status:
+        with self.console.status(f"Downloading '{title}'", spinner="dots") as status:
             self.dzr.download(song_link=decided)
-            status.update("Downloaded!")
         status.stop()
-        self.console.print("[green]Downloaded![reset]")
+        self.console.print(f"[green]Downloaded '{title}'![reset]")
 
 
     def set_arl(self, arl: str) -> bool:

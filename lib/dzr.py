@@ -57,7 +57,7 @@ class Dzr:
                     # when album specified, download all of the album instead of the individiual song
                     return (
                         self.album_url.format(r.json()["data"][0]["album"]["id"]),
-                        r.json()["data"][0]["album"]["title"]
+                        r.json()["data"][0]["album"]["title"],
                     )
                 return (
                     r.json()["data"][0]["link"],
