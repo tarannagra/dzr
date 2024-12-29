@@ -404,6 +404,7 @@ class Main:
                     table.add_row("Email", self.dzr.email)
                     table.add_row("Country Code", self.dzr.country)
                     table.add_section()
+                    table.add_row("Plan", self.dzr.plan)
                     table.add_row("Date Start", self.dzr.date_start)
                     table.add_row("Date End", self.dzr.date_end)
                     table.add_row("Days Left", self.__get_days(end_date=self.dzr.date_end))

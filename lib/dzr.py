@@ -39,6 +39,7 @@ class Dzr:
         self.lastname = None
         self.email = None
         self.country = None
+        self.plan = None
 
 
     def clean(self) -> None:
@@ -180,6 +181,8 @@ class Dzr:
                 self.date_start = self.__strip_date(date=r.json()["results"]["USER"]["TRY_AND_BUY"]["DATE_START"])
                 self.date_end = self.__strip_date(date=r.json()["results"]["USER"]["TRY_AND_BUY"]["DATE_END"])
 
+                self.plan = r.json()["results"]["USER"]["OFFER_NAME"]
+
                 # is music x or y?
                 self.is_lossless = r.json()["results"]["USER"]["OPTIONS"]["web_lossless"]
                 
@@ -193,6 +196,7 @@ class Dzr:
                 self.date_end = "0000-00-00"
 
                 self.is_lossless = "N/A"
+                self.plan = "N/A"
                 
                 # personal information
                 self.firstname = "N/A"
