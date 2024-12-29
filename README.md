@@ -1,4 +1,4 @@
-# dzr-dl :D
+# dzr
 
 This is my program which wraps around Deemix to download songs from Deezer.
 
@@ -29,7 +29,7 @@ python main.py
 
 When loaded, you *should* see the following screen:
 
-![Loading screen of DZR](./assets/image.png)
+![Welcome screen of DZR](./assets/image.png)
 
 & in the input, type in `help` to get a list of available commands!
 
