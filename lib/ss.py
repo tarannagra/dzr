@@ -18,8 +18,8 @@ class SmartSort:
     def get_artist(self, filename: str) -> str:
         try:
             return TinyTag.get(filename).artist
-        except PermissionError: 
-            # if filename isnt a file name as is a folder instead
+        except PermissionError:
+            # if filename isnt a file name but is a folder instead
             return None
 
     def create_folder(self, foldername: str) -> bool:
@@ -38,12 +38,17 @@ class SmartSort:
             for song in songs:
                 # INFO: perform the check here if "song" is a dir and if it is, match with regex
                 # INFO: if it is, then create the folder & then move it into the newly made folder
+                # check = re.search(r"\S+-\S+", song)
                 check = re.search(r"(.+?)\s*-\s*", song)
                 if check:
                     artist = check.group(1).strip()
+                    if len(artist) == 1:
+                        # a bug with the above regex which doesnt match n-aa artists
+                        # hacky workaround for checking the song's artist afterwards
+                        artist = re.search(r"\S+-\S+", song).group().split()
                     # INFO: this gets the artist name and knows that this object is an album
                     self.create_folder(artist)
-                    shutil.move(song, artist) # song in this case is the dir
+                    shutil.move(song, artist)
                     status.update(f"[green]Moved {song} into {artist}")
                 else:
                     artist = self.get_artist(song)
