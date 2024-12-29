@@ -409,7 +409,7 @@ class Main:
                     table.add_row("Days Left", self.__get_days(end_date=self.dzr.date_end))
                     table.add_row("Lossless Active?", "[b green]Yes[reset]" if self.dzr.is_lossless else "[b red]No[reset]")
                     self.console.print(table)
-                    if self.dzr.date_start or self.dzr.date_end == "0000-00-00":
+                    if self.dzr.date_start == "0000-00-00" or self.dzr.date_end == "0000-00-00":
                         self.console.print("Consider [b yellow]changing[reset] your ARL!")
 
                 case "get arl":
