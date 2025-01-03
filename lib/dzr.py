@@ -181,7 +181,7 @@ class Dzr:
                 self.date_start = self.__strip_date(date=r.json()["results"]["USER"]["TRY_AND_BUY"]["DATE_START"])
                 self.date_end = self.__strip_date(date=r.json()["results"]["USER"]["TRY_AND_BUY"]["DATE_END"])
 
-                self.plan = r.json()["results"]["USER"]["OFFER_NAME"]
+                self.plan = r.json()["results"]["OFFER_NAME"]
 
                 # is music x or y?
                 self.is_lossless = r.json()["results"]["USER"]["OPTIONS"]["web_lossless"]
@@ -250,7 +250,7 @@ class Scrape:
 if __name__ == '__main__':
     dzr = Dzr()
     dzr.account_info()
-    print(dzr.date_end)
+    print(dzr.plan)
     # # dzr.search_query(query="marshmello happier")
     # dzr.search_query("2Scratch Escape Plan album")
 
